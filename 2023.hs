@@ -27,3 +27,52 @@ sameSumAbsDiff [] = True
 sameSumAbsDiff [_] = True
 sameSumAbsDiff ((x:xs):(y:ys):rest) = sumAbsDiffs (x:xs) == sumAbsDiffs (y:ys) && sameSumAbsDiff ((y:ys):rest)
 
+
+-- Exercise 3
+-- Define some sample ingredients
+ingredient1 = I "Tomato" 2.0
+ingredient2 = I "Cheese" 1.5
+ingredient3 = I "Bread" 1.0
+ingredient4 = I "Lettuce" 0.5
+ingredient5 = I "Chicken" 2.5
+
+-- Define some sample dishes
+dish1 = D "Cheese Sandwich" [ingredient2, ingredient3] 5.0
+dish2 = D "Chicken Salad" [ingredient4, ingredient5] 7.5
+dish3 = D "Tomato Soup" [ingredient1, ingredient2] 4.0
+dish4 = D "Veggie Burger" [ingredient1, ingredient4, ingredient3] 6.0
+
+-- Define a sample menu
+menu = [dish1, dish2, dish3, dish4]
+
+-- a)
+data Ingredient = I String Double deriving Show
+
+
+-- b)
+data Dish = D String [Ingredient] Double deriving Show
+
+
+-- c)
+type Menu = [Dish] 
+
+
+-- d)
+parseIngredient :: String -> Ingredient
+parseIngredient s = I name quantity where (name, quantity) = parseString s []
+parseString :: [Char] -> [Char] -> ([Char], Double)
+parseString (h:t) b = if h == ' ' then (b, read t :: Double) else parseString t (b ++ [h])
+
+
+-- e)
+calculateTotalPrice :: Menu -> Double
+calculateTotalPrice [] = 0
+calculateTotalPrice ((D _ _ d):t) = d + calculateTotalPrice t
+
+
+-- f)
+findDishesWithIngredient :: Menu -> String -> [String]
+findDishesWithIngredient [] _ = []
+findDishesWithIngredient ((D dishName ing _):t) goal
+  | any (\(I name _) -> name == goal) ing = dishName : findDishesWithIngredient t goal
+  | otherwise = findDishesWithIngredient t goal
