@@ -76,3 +76,12 @@ findDishesWithIngredient [] _ = []
 findDishesWithIngredient ((D dishName ing _):t) goal
   | any (\(I name _) -> name == goal) ing = dishName : findDishesWithIngredient t goal
   | otherwise = findDishesWithIngredient t goal
+
+
+-- Exercise 6
+-- b)
+count :: (Num a1, Eq a2) => [a2] -> a2 -> a1
+count list target = sum [1 | num <- list, num == target]
+
+-- alternative
+count2 list target = length (filter (==target) list) 
