@@ -1,0 +1,6 @@
+-- Exercise 1
+-- a) [0,3..10] = [1,3,5,7,9]
+-- b) :t (1,"3",2.0) = (Fractional c, Num a) => (a, String, c)
+-- c) :t [1, 2.0, "3"] = Error, since you're trying to create a list with elements of different types. In Haskell, lists are homogenous meaning that all its elements must be of the same type
+-- d) foldr (*) 10 (map length ["GUC", "Hello", "MET"]) = 450
+-- e) filter (\(x, y)-> (x + y < 7)) (zip [1, 2, 3, 4] [5, 6, 7]) = [(1, 5)]
